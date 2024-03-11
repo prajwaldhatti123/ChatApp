@@ -8,6 +8,7 @@ import App from "./routes/App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Landing from "./pages/Landing";
 
 // const App = lazy(() => import("./routes/App"));
 // const Home = lazy(() => import("./pages/Home"));
@@ -15,7 +16,8 @@ import SignUp from "./pages/SignUp";
 // const SignUp = lazy(() => import("./pages/SignUp"));
 
 const router = createBrowserRouter([
-  { path: "/", element: <App /> },
+  { path: "/", element: <Landing /> },
+  { path: "/app", element: <App /> },
   { path: "/home", element: <Home /> },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },

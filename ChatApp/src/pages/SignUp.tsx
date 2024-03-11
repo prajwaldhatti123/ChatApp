@@ -11,7 +11,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import LockIcon from "@mui/icons-material/Lock";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import { Link as NavigateLink } from "react-router-dom";
 import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
@@ -65,7 +65,7 @@ const SignUp = () => {
           mb={2}
         >
           <Avatar sx={{ backgroundColor: "#1bbd7e" }}>
-            <LockIcon />
+            <HowToRegIcon />
           </Avatar>
           <Typography variant="h6" mt={2}>
             {" "}
