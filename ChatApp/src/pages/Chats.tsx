@@ -9,30 +9,43 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { Line } from "react-chartjs-2";
-import { Link } from "react-router-dom";
+// import { Line } from "react-chartjs-2";
+// import { Link } from "react-router-dom";
 
 interface Chat {
   sender: string;
   message: string;
   profilePhoto: string;
 }
+interface identification {
+  (profilePhoto: string, sender: string): void;
+}
 interface ChatListProps {
   chats: Chat[];
+  chatClick: identification;
 }
-const Chats: React.FC<ChatListProps> = ({ chats }) => {
-  console.log(chats);
+const Chats: React.FC<ChatListProps> = ({ chats, chatClick }) => {
+  function handleChatClick(profilePhoto: string, sender: string): void {
+    // console.log(sender);
+    chatClick(profilePhoto, sender);
+  }
+
   return (
     <Typography component={"div"} sx={{ ":hover": { cursor: "pointer" } }}>
       {chats.map((chat: Chat, index: number) => (
         <Grid key={index} width={"100%"}>
           <ListItem
-            onClick={() => {
-              console.log(chat.sender);
+            onClick={(event) => {
+              event.stopPropagation();
+              handleChatClick(chat.profilePhoto, chat.sender);
             }}
           >
             <ListItemAvatar>
-              <Avatar src={chat.profilePhoto} alt={chat.sender} />{" "}
+              <Avatar
+                src={chat.profilePhoto}
+                alt={chat.sender}
+                sx={{ height: "3rem", width: "3rem", marginRight: "1rem" }}
+              />{" "}
               {/* Display profile photo */}
             </ListItemAvatar>
             <ListItemText

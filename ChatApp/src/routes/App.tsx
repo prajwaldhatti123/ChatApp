@@ -9,32 +9,48 @@ import {
   Menu,
   InputAdornment,
   InputBase,
+  Typography,
 } from "@mui/material";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import AddReactionIcon from "@mui/icons-material/AddReaction";
+// import ContextProvider from "../context/ContextApi";
 import {
   AccountCircle,
   AttachFile,
-  Chat,
+  // Chat,
   KeyboardVoice,
   Logout,
   SendSharp,
   Settings,
 } from "@mui/icons-material";
 import Chats from "../pages/Chats";
+import { chatContext } from "../context/ContextApi";
 
 // import Chats from "../pages/Chats";
 // import { Outlet } from "react-router-dom";
 const App = () => {
   const [AnchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const open = Boolean(AnchorEl);
-  const chatsArray = chatsLoader(30);
+  const [chatAnchorEl, setChatAnchorEl] = useState<HTMLElement | null>(null);
+  const [profile, setProfile] = useState("");
+  const [name, setName] = useState("");
 
-  const handleProfileClick = () => {
-    console.log("profile");
+  //c random data
+  const open = Boolean(AnchorEl);
+  const openChatMenu = Boolean(chatAnchorEl);
+  // const chatsArray = chatsLoader(30);
+  const chatsArray = useContext(chatContext);
+
+  const handleProfileClick = () => {};
+  const handleChatProfileClick = () => {};
+  const handleChatMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setChatAnchorEl(event.currentTarget);
+  };
+  const chatClick = (img: string, ide: string) => {
+    setProfile(img);
+    setName(ide);
   };
   const handleThreeDotClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -42,11 +58,16 @@ const App = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleChatMenuClose = () => {
+    setChatAnchorEl(null);
+  };
   return (
     //c complete screen grid
+    // <ContextProvider>
     <Grid sx={{ height: "100vh", display: "flex" }}>
       {/* sidebar grid */}
       <Grid
+        item
         container
         sx={{
           display: "flex",
@@ -78,6 +99,11 @@ const App = () => {
                 aria-label=""
                 edge="start"
                 onClick={handleProfileClick}
+                sx={{
+                  border: "0.1em solid black",
+                  borderRadius: "50%",
+                  padding: 0,
+                }}
               >
                 <Avatar
                   src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
@@ -172,15 +198,18 @@ const App = () => {
             overflowY: "auto",
             height: "calc(100vh - 5rem)",
             "&::-webkit-scrollbar": { width: "0.5em" },
-            "&::-webkit-scrollbar-thumb": { backgroundColor: "rgba(0,0,0,.2)" },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "rgba(0,0,0,.2)",
+            },
           }}
         >
-          <Chats chats={chatsArray}></Chats>
+          <Chats chats={chatsArray} chatClick={chatClick}></Chats>
         </Grid>
       </Grid>
 
       {/* chat grid */}
       <Grid
+        item
         container
         sx={{ display: "flex", flexDirection: "column" }}
         xl={9}
@@ -190,17 +219,111 @@ const App = () => {
         xs={0}
       >
         {/* chat Header */}
-        <Grid>
-          <AppBar
-            position="static"
-            sx={{
-              height: "5rem",
-              backgroundColor: "#47B5FF",
-            }}
-          >
-            <Toolbar></Toolbar>
-          </AppBar>
-        </Grid>
+        {profile ? (
+          <Grid>
+            <AppBar
+              position="static"
+              sx={{
+                height: "5rem",
+                backgroundColor: "#47B5FF",
+                display: "flex",
+                // alignItems: profile ? "start" : "center",
+                justifyContent: "center",
+              }}
+            >
+              <Toolbar>
+                <IconButton
+                  aria-label="chat-profile-icon"
+                  onClick={handleChatProfileClick}
+                  sx={{
+                    border: "0.1em solid black",
+                    borderRadius: "50%",
+                    padding: 0,
+                  }}
+                >
+                  <Avatar
+                    src={
+                      profile
+                        ? profile
+                        : "https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                    }
+                    sx={{
+                      height: 50,
+                      width: 50,
+                    }}
+                  />
+                </IconButton>
+                <Typography
+                  variant="h6"
+                  ml={3}
+                  sx={{ fontSize: "1.5rem", color: "black" }}
+                  component={"div"}
+                  flexGrow={1}
+                >
+                  {name}
+                </Typography>
+                <Stack direction={"row"} spacing={4} mr={0}>
+                  {/* Menu Display Button */}
+                  <IconButton
+                    color="inherit"
+                    id="profile-button"
+                    aria-controls={openChatMenu ? "menu-profile" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openChatMenu ? "true" : undefined}
+                    onClick={handleChatMenuClick}
+                    sx={{ fontSize: "1.2rem" }}
+                  >
+                    <MoreVertIcon
+                      sx={{ fontSize: "2.5rem", color: "black" }}
+                    ></MoreVertIcon>
+                  </IconButton>
+                  <Menu
+                    id="menu-profile"
+                    aria-labelledby="profile-button"
+                    open={openChatMenu}
+                    anchorEl={chatAnchorEl}
+                    onClose={handleChatMenuClose}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                  >
+                    <MenuItem onClick={handleChatMenuClose}>Login</MenuItem>
+                    <MenuItem onClick={handleChatMenuClose}>Logout</MenuItem>
+                    <MenuItem onClick={handleChatMenuClose}>Settings</MenuItem>
+                  </Menu>
+                </Stack>
+              </Toolbar>
+            </AppBar>
+          </Grid>
+        ) : (
+          <Grid>
+            <AppBar
+              position="static"
+              sx={{
+                height: "5rem",
+                backgroundColor: "#47B5FF",
+                display: "flex",
+                alignItems: profile ? "flex-start" : "center",
+                justifyContent: "center",
+              }}
+            >
+              <Toolbar>
+                <Typography
+                  variant="h6"
+                  color="initial"
+                  sx={{ marginLeft: "auto" }}
+                >
+                  select chats to see message
+                </Typography>
+              </Toolbar>
+            </AppBar>
+          </Grid>
+        )}
 
         {/* chat content */}
         <Grid
@@ -228,7 +351,6 @@ const App = () => {
             sx={{
               height: "5rem",
               display: "flex",
-
               justifyContent: "center",
               backgroundColor: "#DFF5FF",
             }}
@@ -237,7 +359,7 @@ const App = () => {
               {/* emoji icon button */}
               <IconButton aria-label="">
                 <AddReactionIcon
-                  sx={{ color: "black", fontSize: 40, mr: 2 }}
+                  sx={{ color: "black", fontSize: 40, mr: 2, opacity: 0.7 }}
                 ></AddReactionIcon>
               </IconButton>
 
@@ -254,10 +376,9 @@ const App = () => {
                 placeholder="Type a message"
                 sx={{
                   fontSize: 22,
-                  width: "65%",
-                  // "&:focus": {
-                  //   outline: "none !important",
-                  // },
+                  flex: "1 1", // Allow the input to grow and shrink
+                  minWidth: 0, // Ensure the input can shrink to 0 width
+                  maxWidth: "65%", // Set maximum width
                   border: "1px solid black",
                   boxShadow: "1px 1px 10px #47B5FF",
                   borderRadius: 2,
@@ -275,7 +396,7 @@ const App = () => {
               {/* Mic icon button */}
               <IconButton aria-label="">
                 <KeyboardVoice
-                  sx={{ color: "black", fontSize: 40, mr: 2 }}
+                  sx={{ color: "black", fontSize: 40 }}
                 ></KeyboardVoice>
               </IconButton>
             </Toolbar>
@@ -283,29 +404,8 @@ const App = () => {
         </Grid>
       </Grid>
     </Grid>
+    // </ContextProvider>
   );
-};
-
-// chat loader function
-interface Chat {
-  sender: string;
-  message: string;
-  profilePhoto: string;
-}
-
-export const chatsLoader = (count: number): Chat[] => {
-  const getRandomProfilePhoto = (): string => {
-    const randomId = Math.floor(Math.random() * 1000); // Generate a random ID between 0 and 999
-    return `https://picsum.photos/id/${randomId}/100/100`; // Use Lorem Picsum API with random ID
-  };
-  const chats: Chat[] = [];
-  for (let i = 0; i < count; i++) {
-    const sender = `User ${i + 1}`;
-    const message = `Message ${i + 1}`;
-    const profilePhoto = getRandomProfilePhoto();
-    chats.push({ sender, message, profilePhoto });
-  }
-  return chats;
 };
 
 export default App;
