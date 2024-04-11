@@ -28,6 +28,7 @@ import {
 } from "@mui/icons-material";
 import Chats from "../pages/Chats";
 import { chatContext } from "../context/ContextApi";
+// import Loaders from "../components/layouts/Loaders";
 
 // import Chats from "../pages/Chats";
 // import { Outlet } from "react-router-dom";
@@ -70,8 +71,9 @@ const App = () => {
         item
         container
         sx={{
-          display: "flex",
+          // display: "flex",
           // flex: "0 0 auto",
+          display: { xs: "block" },
           flexDirection: "column",
           borderRight: "1px solid black",
           height: "100vh", // Set a fixed height
@@ -79,9 +81,9 @@ const App = () => {
         }}
         xl={3}
         lg={4}
-        md={4}
-        sm={4}
-        xs={12}
+        // md={4}
+        // sm={4}
+        // xs={12}
       >
         {/*  chat sidebar header */}
         <Grid item>
@@ -211,12 +213,21 @@ const App = () => {
       <Grid
         item
         container
-        sx={{ display: "flex", flexDirection: "column" }}
+        sx={{
+          display: {
+            xs: "none",
+            sm: "none",
+            md: "none",
+            lg: "flex",
+            xl: "flex",
+          },
+          flexDirection: "column",
+        }}
         xl={9}
         lg={8}
         md={8}
         sm={8}
-        xs={0}
+        // xs={0}
       >
         {/* chat Header */}
         {profile ? (
