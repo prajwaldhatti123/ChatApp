@@ -11,6 +11,7 @@ import Landing from "./pages/Landing";
 import ContextProvider from "./context/ContextApi";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { LayoutLoaders } from "./components/layouts/Loaders";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const App = lazy(() => import("./routes/App"));
 // const Home = lazy(() => import("./pages/Home"));
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
     ),
   },
   { path: "/signup", element: <SignUp /> },
+  { path: "*", element: <NotFoundPage></NotFoundPage> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

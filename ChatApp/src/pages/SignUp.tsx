@@ -43,6 +43,7 @@ const SignUp = () => {
           flexDirection: "column",
           height: "700px",
           width: "23%",
+          minWidth: "22rem",
           margin: "auto",
           padding: "2rem",
           alignItems: "center",
@@ -90,7 +91,7 @@ const SignUp = () => {
                 </InputAdornment>
               ),
             }}
-            sx={{ marginBottom: "30px" }}
+            sx={{ marginBottom: "1.5rem", minWidth: "20rem" }}
           />
 
           {/* userName textField */}
@@ -107,7 +108,7 @@ const SignUp = () => {
                 </InputAdornment>
               ),
             }}
-            sx={{ marginBottom: "30px" }}
+            sx={{ marginBottom: "30px", minWidth: "20rem" }}
           />
 
           {/* Password textField */}
@@ -134,7 +135,7 @@ const SignUp = () => {
                 </InputAdornment>
               ),
             }}
-            sx={{ marginBottom: "30px" }}
+            sx={{ marginBottom: "30px", minWidth: "20rem" }}
           />
 
           {/* confirm Password textField */}
@@ -161,7 +162,7 @@ const SignUp = () => {
                 </InputAdornment>
               ),
             }}
-            sx={{ marginBottom: "30px" }}
+            sx={{ marginBottom: "30px", minWidth: "20rem" }}
           />
         </Grid>
 

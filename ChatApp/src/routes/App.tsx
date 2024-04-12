@@ -362,6 +362,7 @@ const App = () => {
             sx={{
               height: "5rem",
               display: "flex",
+              // flex: " 1  1",
               justifyContent: "center",
               backgroundColor: "#DFF5FF",
             }}
@@ -370,7 +371,13 @@ const App = () => {
               {/* emoji icon button */}
               <IconButton aria-label="">
                 <AddReactionIcon
-                  sx={{ color: "black", fontSize: 40, mr: 2, opacity: 0.7 }}
+                  sx={{
+                    color: "black",
+                    fontSize: 40,
+                    mr: 2,
+                    opacity: 0.7,
+                    // flex: " 1  1",
+                  }}
                 ></AddReactionIcon>
               </IconButton>
 
@@ -387,9 +394,10 @@ const App = () => {
                 placeholder="Type a message"
                 sx={{
                   fontSize: 22,
-                  flex: "1 1", // Allow the input to grow and shrink
-                  minWidth: 0, // Ensure the input can shrink to 0 width
-                  maxWidth: "65%", // Set maximum width
+                  // flex: "1 1",/ // Allow the input to grow and shrink
+                  minWidth: "0px",
+                  width: "50%", // Ensure the input can shrink to 0 width
+                  maxWidth: "60%", // Set maximum width
                   border: "1px solid black",
                   boxShadow: "1px 1px 10px #47B5FF",
                   borderRadius: 2,
