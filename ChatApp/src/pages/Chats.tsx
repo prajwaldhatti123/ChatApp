@@ -1,4 +1,4 @@
-import React from "react";
+// import React, { useState } from "react";
 import {
   //   List,
   ListItem,
@@ -33,10 +33,18 @@ const Chats: React.FC<ChatListProps> = ({ chats, chatClick }) => {
   return (
     <Typography component={"div"} sx={{ ":hover": { cursor: "pointer" } }}>
       {chats.map((chat: Chat, index: number) => (
-        <Grid key={index} width={"100%"}>
+        <Grid
+          key={index}
+          width={"100%"}
+          sx={{
+            ":hover": { cursor: "pointer", backgroundColor: "#F0F0F0" },
+            // backgroundColor: { selectedChatColor },
+          }}
+        >
           <ListItem
             onClick={(event) => {
               event.stopPropagation();
+              // event.currentTarget.style.backgroundColor = selectedChatColor;
               handleChatClick(chat.profilePhoto, chat.sender);
             }}
           >
